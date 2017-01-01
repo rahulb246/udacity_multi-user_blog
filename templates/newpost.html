@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+  <form method="post">
+    <div class="form-group">
+      <label>title</label>
+      <input type="text" name="title" class="form-control" id="entry-title" value={{title}}>
+    </div>
+    <div class="form-group">
+      <label>Content</label>
+      <textarea class="form-control" name="content" rows="3">{{content}}</textarea>
+    </div>
+
+    {% if error %}
+      <div class="alert alert-danger">
+        {{error}}
+      </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-default">Submit</button>
+
+  </form>
+
+{% endblock %}

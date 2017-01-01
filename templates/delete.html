@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+  {% if error %}
+
+    <div>
+      <p>{{error}}</p>
+    </div>
+
+  {% else %}
+
+    <div>
+      <p>Post Deleted</p>
+    </div>
+
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+  {% if error %}
+    <div>
+      <p>Only owner's of this post can edit this post.</p>
+    </div>
+  {% else %}
+    {% if post %}
+
+      <form method="post">
+        <div class="form-group">
+          <label>title</label>
+          <input type="text" name="title" class="form-control" id="entry-title" value="{{post.title}}">
+        </div>
+        <div class="form-group">
+          <label>Content</label>
+          <textarea class="form-control" name="content" rows="10">{{post.content}}</textarea>
+        </div>
+
+        {% if error %}
+          <div class="alert alert-danger">
+            {{error}}
+          </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-default">Submit</button>
+        <a href="/post/{{post.key().id()}}" type="submit" class="btn btn-danger pull-right">Cancel</a>
+
+      </form>
+
+    {% else %}
+
+      <div>
+        <p>The post you are looking for doesnt exist. </p>
+      </div>
+
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
