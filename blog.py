@@ -159,11 +159,17 @@ class PostPage(Handler):
             return
 
         post._render_text = post.content.replace('\n', '<br>')
-        self.render("post.html", post = post, likeText = likeText, totalLikes = totalLikes, uid = uid, comments = comments)
+        self.render(
+                    "post.html",
+                    post = post,
+                    likeText = likeText,
+                    totalLikes = totalLikes,
+                    uid = uid,
+                    comments = comments)
 
     def post(self, post_id):
         if not self.user:
-            self.redirect('/')
+            return self.redirect('/login')
 
         title = self.request.get('title')
         content = self.request.get('content')
@@ -288,7 +294,7 @@ class NewPost(Handler):
     # function that handles creation of new post
     def post(self):
         if not self.user:
-            self.redirect('/login')
+            return self.redirect('/login')
 
         title = self.request.get('title')
         content = self.request.get('content')
