@@ -192,7 +192,9 @@ class LikePage(Handler):
         post = db.get(key)
 
         uid = self.read_secure_cookie('user_id')
-
+        if not uid:
+            self.render("login.html")
+            return
         if not post:
             self.error(404)
             return
@@ -227,14 +229,17 @@ class DeletePage(Handler):
             return
 
         uid = self.read_secure_cookie('user_id')
+        if not uid:
+            self.render("login.html")
+            return
 
         if post.user_id != uid:
             err_msg = 'Only owner of this post can delete this post'
+            self.render("delete.html", error = err_msg, uid=uid)
         else:
             err_msg = ''
             db.delete(key)
-
-        self.render("delete.html", error = err_msg, uid=uid)
+            self.render("delete.html", error = err_msg, uid=uid)
 
 # Class that handles editing of a post.
 # post id in the url is used as reference
@@ -250,13 +255,16 @@ class EditPage(Handler):
             return
 
         uid = self.read_secure_cookie('user_id')
+        if not uid:
+            self.render("login.html")
+            return
 
         if post.user_id != uid:
             err_msg = 'only owner of this post can edit this !!'
+            self.render("edit.html", post = post, error = err_msg, uid=uid)
         else:
             err_msg = ''
-
-        self.render("edit.html", post = post, error = err_msg, uid=uid)
+            self.render("edit.html", post = post, error = err_msg, uid=uid)
 
     def post(self, post_id):
         key = db.Key.from_path('Post', int(post_id), parent=blog_key())
